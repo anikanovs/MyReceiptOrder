@@ -1,4 +1,5 @@
 ﻿using API.DTOs;
+using API.Entities;
 using API.interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -20,7 +21,7 @@ public class UserRepository(DataContext context , IMapper mapper) : IUserReposit
 
     public async Task<IEnumerable<AppUser>> GetUsersAsync()
     {
-        return await context.Users.Include(x=>x.Photos).ToListAsync();
+        return await context.Users.ToListAsync();
     }
 
     public async Task<AppUser?> GetUsersByIdAsync(int id)
@@ -30,7 +31,7 @@ public class UserRepository(DataContext context , IMapper mapper) : IUserReposit
 
     public async Task<AppUser?> GetUsersByUsernameAsync(string username)
     {
-        return await context.Users.Include(x=>x.Photos).SingleOrDefaultAsync(x => x.UserName == username);
+        return await context.Users.SingleOrDefaultAsync(x => x.UserName == username);
     }
 
     public async Task<bool> SaveAllAsync()

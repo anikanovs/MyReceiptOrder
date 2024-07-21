@@ -1,6 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using API.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data;
@@ -27,8 +28,8 @@ public class Seed
         {
             using var hmac = new HMACSHA512();
             user.UserName = user.UserName.ToLower();
-            user.PasswrodHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("Pa$$w0rd"));
-            user.PasswrodSalt = hmac.Key;
+            user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("Pa$$w0rd"));
+            user.PasswordSalt = hmac.Key;
             Context.Users.Add(user);
         }
         await Context.SaveChangesAsync();

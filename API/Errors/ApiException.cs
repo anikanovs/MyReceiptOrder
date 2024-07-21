@@ -1,8 +1,8 @@
-﻿namespace API;
+﻿namespace API.Errors;
 
-public class ApiException(int statuscode , string message , string? detail )
+public class ApiException(int statusCode, string message, string? detail)
 {
-    public int statuscode { get; set; } = statuscode;
-    public string message { get; set; } = message;
-    public string? detail { get; set; } = detail;
+    public int StatusCode { get; set; } = statusCode;
+    public string Message { get; set; } = message;
+    public string? Detail { get; set; } = detail;
 }

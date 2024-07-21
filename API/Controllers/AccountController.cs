@@ -41,13 +41,13 @@ public class AccountController(DataContext context , ITokenService tokenService)
 
         if(user == null) return Unauthorized("invalid username :(");
 
-        using var hmac = new HMACSHA512(user.PasswrodSalt);
+        using var hmac = new HMACSHA512(user.PasswordSalt);
 
         var ComputedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
 
         for (int i = 0; i < ComputedHash.Length; i++)
         {
-            if(ComputedHash[i] != user.PasswrodHash[i]) return Unauthorized("password is invalid :(");
+            if(ComputedHash[i] != user.PasswordHash[i]) return Unauthorized("password is invalid :(");
         }
 
         return new UserDto

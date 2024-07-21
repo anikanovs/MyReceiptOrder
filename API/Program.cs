@@ -1,22 +1,14 @@
-using API;
 using API.Data;
 using API.Extensions;
+using API.Middleware;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-                
-                
-
-// Add services to the container.
 
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
 
-
-
-
 var app = builder.Build();
-
 
 app.UseDeveloperExceptionPage();
 app.UseMiddleware<ExceptionMiddleware>();
@@ -27,9 +19,7 @@ app.UseCors(x=>x.AllowAnyHeader().AllowAnyMethod().WithOrigins(
 app.UseAuthentication();
 app.UseAuthorization();
 
-
 app.MapControllers();
-
 
 using var scope = app.Services.CreateScope();
 var services =scope.ServiceProvider;
@@ -44,12 +34,8 @@ try
 catch (Exception ex)
 {
     var logger = services.GetRequiredService<ILogger<Program>>();
-    logger.LogError(ex,"an error has ocured");
+    logger.LogError(ex,"an error has occurred");
     
 }
-
-
-
-
 
 app.Run();
